@@ -268,7 +268,7 @@ func (ca *CA) verifyPOST(r *http.Request, kx keyExtractor) (*authenticatedPOST, 
 	r.Body = http.MaxBytesReader(nil, r.Body, maxBodySize)
 	bodyBytes, err := io.ReadAll(r.Body)
 	if err != nil {
-		if _, ok := errors.AsType[*http.MaxBytesError](err); ok {
+		if _, ok := asType[*http.MaxBytesError](err); ok {
 			return nil, RequestTooLarge("Request body too large")
 		}
 		return nil, InternalServerError("Failed to read request body")
@@ -282,7 +282,7 @@ func (ca *CA) verifyPOST(r *http.Request, kx keyExtractor) (*authenticatedPOST, 
 
 	jws, err := ca.parseJWS(body)
 	if err != nil {
-		if prob, ok := errors.AsType[*Problem](err); ok {
+		if prob, ok := asType[*Problem](err); ok {
 			return nil, prob
 		}
 		return nil, Malformed(fmt.Sprintf("Failed to parse JWS: %v", err))

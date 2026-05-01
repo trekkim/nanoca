@@ -108,7 +108,7 @@ func (ca *CA) parseJWS(body string) (*jose.JSONWebSignature, error) {
 
 	jws, err := jose.ParseSigned(body, supportedJWSAlgorithms)
 	if err != nil {
-		if _, ok := errors.AsType[*jose.ErrUnexpectedSignatureAlgorithm](err); ok {
+		if _, ok := asType[*jose.ErrUnexpectedSignatureAlgorithm](err); ok {
 			return nil, BadSignatureAlgorithm("JWS contains unexpected signature algorithm", getSupportedAlgorithmStrings())
 		}
 		return nil, fmt.Errorf("failed to parse JWS: %w", err)

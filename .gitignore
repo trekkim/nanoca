@@ -1,3 +1,6 @@
 .DS_Store
 mdm_storage/
 nanomdm
+pki/rootCA-pkcs8.key
+pki/rootCA.crt
+pki/rootCA.key

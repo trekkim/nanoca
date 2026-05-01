@@ -1,0 +1,20 @@
+[Unit]
+Description=NanoCA ACME Certificate Authority
+Documentation=https://github.com/brandonweeks/nanoca
+After=network.target
+Wants=network.target
+
+[Service]
+ExecStart=/usr/local/bin/nanoca \
+    -ca-cert /usr/local/mdm/nanoca/pki/rootCA.crt \
+    -ca-key /usr/local/mdm/nanoca/pki/rootCA-pkcs8.key \
+    -base-url https://mdm.example.com \
+    -prefix /acme \
+    -listen :9003 \
+    -storage /usr/local/mdm/nanoca/data
+
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
